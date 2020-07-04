@@ -1,0 +1,80 @@
+https://practice.geeksforgeeks.org/problems/maximum-rectangular-area-in-a-histogram-1587115620/1/?track=ppc-stack&batchId=221
+
+
+vector < long long > NSL ( long long arr[] , int n )
+{
+    stack<int> s; 
+    vector<long long>left;
+    
+    for(int i=0;i<n;i++)
+    {
+        while(!s.empty() && arr[s.top()]>=arr[i])
+        {
+            s.pop();
+        }
+        
+        if(s.empty())
+        {
+            left.push_back(-1);
+        }
+        else
+        {
+            left.push_back(s.top());
+        }
+        s.push(i);
+    }
+    return left ; 
+}
+vector < long long > NSR ( long long arr[] , int n )
+{
+    stack<int> s; 
+    vector<long long>right;
+    for(int i=n-1;i>=0;i--)
+    {
+        while(!s.empty() && arr[s.top()]>=arr[i])
+        {
+            s.pop();
+        }
+        
+        if(s.empty())
+        {
+            right.push_back(n);
+        }
+        else
+        {
+            right.push_back(s.top());
+        }
+        s.push(i);
+    }
+    reverse ( right.begin() , right.end() ) ;
+    return right ; 
+}
+
+
+
+
+
+
+
+
+long getMaxArea( long long arr[], int n){
+    if ( n == 0 )
+    return 0 ; 
+    vector < long long > left , right , width  ;
+    long long area = 0 ; 
+    left = NSL ( arr , n ) ;
+    right = NSR ( arr , n ) ;
+    long long Max = 0 ; 
+    for ( long long i = 0 ; i < n ; i++ )
+    {
+        
+        area =  ( (right[i] - left[i] - 1) * arr[i] ) ;
+        Max = max ( Max , area ) ;
+    }
+    return Max ; 
+    
+    
+    
+    
+    
+}
