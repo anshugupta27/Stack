@@ -1,0 +1,40 @@
+https://practice.geeksforgeeks.org/problems/evaluation-of-postfix-expression1735/1/?track=ppc-stack&batchId=221
+
+
+
+
+int evaluatePostfix(string &str)
+{
+    stack < int > s ; 
+   for ( int i = 0 ; i < str.length() ; i++ )
+   {
+       
+       if ( isdigit ( str[i]  ) )
+       s.push ( str[i] - '0' ) ;
+       else
+       {
+           int a , b ; 
+           if ( !s.empty() )
+           {
+            a = s.top() ;
+           s.pop() ;
+           }
+           if ( !s.empty() )
+           {
+           b = s.top() ;
+           s.pop() ; 
+           }
+           
+           if ( str[i] == '*' )
+           s.push( b * a ) ;
+           if ( str[i] == '+' )
+           s.push ( b + a ) ;
+           if ( str[i] == '-' )
+           s.push( b - a ) ;
+           if ( str[i] == '/' )
+           s.push ( b / a ) ;
+           
+       }
+   }
+   return s.top() ;
+}
